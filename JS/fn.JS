@@ -86,29 +86,31 @@ async function buscarPokemon() {
             let defensa = statdefensa ? statdefensa.base_stat : 0;
 
             //Declaramos una variable que sirve como "plantilla" para mostrar datos
-            var mostrar = ` <div>
+            var mostrar = ` <div >
                         <p>${pokemon.name}</p>
                         <img src ="${pokemon.sprites.front_default}">
-                        <p>Defensa:${defensa}</p>
-                        <p>Ataque:${ataque}</p>
+                        <p class="defensa">Defensa:${defensa}</p>
+                        <p class="ataque">Ataque:${ataque}</p>
                         </div>`;
+            
+
         
             //declaramos el límite de la cantidad de pokemones que serán parte del 
             //primer grupo. el "3" está "hardcodeado"
             //tarea: pensar una manera de transformar este hard-codding en un código
             //escalable (es decir, que siga funcionando en caso de que la variable
             // que contiene el grande de los pokemon sea de un valor más alto)
-            if(contadorPokemones < 3)
+            if(i < 3)
             {
                 ataqueEquipo1 += ataque;
                 defensaEquipo1 += defensa;
             
                 document.getElementById("equipo1").innerHTML +=`${mostrar}`
 
-                if(contadorPokemones==2){
-                     document.getElementById("equipo1").innerHTML +=`<div>
-                                            <p>Ataque grupal: ${ataqueEquipo1}</p>
-                                            <p>Defensa Grupal: ${defensaEquipo1}</p>
+                if(i==2){
+                     document.getElementById("stats_equipo1").innerHTML +=`<div>
+                                            <p class="ataque_grupal">Ataque grupal: ${ataqueEquipo1}</p>
+                                            <p class="defensa_grupal">Defensa Grupal: ${defensaEquipo1}</p>
                                         </div>`;
                 }
                 
@@ -118,10 +120,10 @@ async function buscarPokemon() {
 
                 document.getElementById("equipo2").innerHTML +=`${mostrar}`
 
-                if(contadorPokemones==5){
-                     document.getElementById("equipo2").innerHTML +=`<div>
-                                            <p>Ataque grupal: ${ataqueEquipo2}</p>
-                                            <p>Defensa Grupal: ${defensaEquipo2}</p>
+                if(i==5){
+                     document.getElementById("stats_equipo2").innerHTML +=`<div>
+                                            <p class="ataque_grupal" >Ataque grupal: ${ataqueEquipo2}</p>
+                                            <p class="defensa_grupal" >Defensa Grupal: ${defensaEquipo2}</p>
                                         </div>`;
                 }
             }
