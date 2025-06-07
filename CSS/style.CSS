@@ -30,13 +30,20 @@ body {
     color: greenyellow;
 }
 
-.equipo {
+.equipo{
     display: flex;
     flex-direction: row;
     margin: 10vh;
 }
 
-.grupoA,.grupoB {
+.grupoA{
+    display: flex;
+    flex-direction: column;
+    border: solid 2px white;
+    border-radius: 3vh;
+}
+
+.grupoB{
     display: flex;
     flex-direction: column;
     border: solid 2px white;
@@ -45,5 +52,4 @@ body {
 
 .vs{
     margin: 5vh;
-    margin-top: 30vh;
 }

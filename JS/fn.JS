@@ -1,6 +1,14 @@
 const link = "https://pokeapi.co/api/v2/pokemon/";
 const grandeEquipos = 6; // Cantidad de pokemones que queremos traer en total
 const cantidadPokemons = 1040; //Cantidadf máxima de pokemones que pueden llamarse con este método sin que de error
+var ataqueEquipo1 = 0;
+var ataqueEquipo2 = 0;
+var defensaEquipo1 = 0;
+var defensaEquipo2 = 0;
+var limiteTiradas = 3;
+var tiradasA = [];
+var tiradasB = [];
+
 
 async function buscarPokemon() {
     //constante que contiene una función asíncrona (porque dentro trabaja con un fetch) La 
@@ -62,10 +70,6 @@ async function buscarPokemon() {
         const pokemones = await getPokemones();
 
         //Comenzamos con la declaración y envío de datos al html
-        var ataqueEquipo1 = 0;
-        var ataqueEquipo2 = 0;
-        var defensaEquipo1 = 0;
-        var defensaEquipo2 = 0;
         var contadorPokemones = 0;
 
         //forEach recorre los elementos del array mencionado uno a uno y realiza
@@ -86,7 +90,7 @@ async function buscarPokemon() {
             let defensa = statdefensa ? statdefensa.base_stat : 0;
 
             //Declaramos una variable que sirve como "plantilla" para mostrar datos
-            var mostrar = ` <div >
+            var mostrar = ` <div>
                         <p>${pokemon.name}</p>
                         <img src ="${pokemon.sprites.front_default}">
                         <p class="defensa">Defensa:${defensa}</p>
@@ -133,7 +137,79 @@ async function buscarPokemon() {
         });
     })();
     
+    document.getElementById("vs").innerHTML += `<button id='comenzarBatalla' 
+    disabled value='${ataqueEquipo1},${ataqueEquipo2},${defensaEquipo1},${defensaEquipo2}' 
+    onClick="iniciarBatalla(this.value)">Iniciar Batalla</button>`;
+
+    document.getElementById("tirarDadosA").innerHTML = `
+    <button id="dadosA" onClick="tirarDadosA()">Tirar dados</button>`;
+
+    document.getElementById("tirarDadosB").innerHTML = `
+    <button id="dadosB" onClick="tirarDadosB()">Tirar dados</button>`;
 }   
 
 //llamamos a la función automáticamente al cargar la página 
 buscarPokemon();
+
+/*Cómo tenemos que llamar los valores del botón de batalla: 
+    const [ataque1, ataque2, defensa1, defensa2] = value.split(',').map(Number);
+    
+    // Ahora podés usar las variables
+    console.log("Ataques:", ataque1, ataque2);
+    console.log("Defensas:", defensa1, defensa2);
+
+*/
+
+function tirarDadosA()
+{
+    let dado1 = Math.floor(Math.random () *6 ) + 1 ;
+    let dado2 = Math.floor(Math.random () *6 ) + 1 ;
+    tiradasA.push(dado1+dado2);
+    console.log(tiradasA);
+    if(tiradasA.length==3)
+        {
+            document.getElementById('dadosA').disabled = true;
+            corroborarTiradas();
+        }
+}
+
+function tirarDadosB()
+{
+    let dado1 = Math.floor(Math.random () *6 ) + 1 ;
+    let dado2 = Math.floor(Math.random () *6 ) + 1 ;
+    tiradasB.push(dado1+dado2);
+    console.log(tiradasB);
+    if(tiradasB.length==3)
+        {
+            document.getElementById('dadosB').disabled = true;
+            corroborarTiradas();
+        }
+}
+
+function corroborarTiradas(){
+    if (tiradasB.length==3 && tiradasA.length==3)
+    {
+        document.getElementById('comenzarBatalla').disabled = false; 
+    }
+}
+
+function iniciarBatalla(){
+    ataqueFinalEquipoA = ataqueEquipo1 - defensaEquipo2;
+    ataqueFinalEquipoB = ataqueEquipo2 - defensaEquipo1;
+
+    if(ataqueFinalEquipoA>ataqueFinalEquipoB)
+    {
+        document.getElementById("").innerHTML += `<h2>Ganador Equipo 1</h2>`;
+
+    }else if(ataqueFinalEquipoA<ataqueFinalEquipoB)
+    {
+        document.getElementById("").innerHTML += `<h2>Ganador Equipo 2</h2>`;
+    }else{
+        desempate();
+    }
+}
+
+function desempate(){
+
+}
+
